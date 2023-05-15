@@ -41,8 +41,7 @@ class _HomePageState extends State<HomePage> {
         scheme: 'https',
         host: 'yts.mx',
         path: '/api/v2/list_movies.json',
-        pathSegments: <String>['api', 'v2', 'list_movies.json'],
-        queryParameters: <String, String>{'page': '1'});
+        queryParameters: <String, String>{'page': '1', 'client_id': 'ahjdbashjkbchjkasnckajsnckjasnkjcasnkjc'});
 
     final Response response = await get(uri);
     final Map<String, dynamic> map = jsonDecode(response.body) as Map<String, dynamic>;
@@ -51,17 +50,12 @@ class _HomePageState extends State<HomePage> {
 
     for (int i = 0; i < movies.length; i++) {
       final Map<String, dynamic> movie = movies[i] as Map<String, dynamic>;
-      final Movie item = Movie(
-          title: movie['title'] as String,
-          image: movie['medium_cover_image'] as String,
-          rating: movie['rating'] as num,
-          year: movie['year'] as int);
-      _movies.add(item);
-    }
+      _movies.add(Movie.fromJson(movie));
     setState(() {
       // update list
     });
   }
+}
 
   @override
   Widget build(BuildContext context) {
